@@ -1,0 +1,39 @@
+name: Leaderboard Update
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+  release:
+    types: [published]
+
+jobs:
+  leaderboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Track Commit History
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/commits \
+          > commit_history.json
+
+      - name: Track Pull Requests
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/pulls \
+          > pull_requests.json
+
+      - name: Track Tags
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/tags \
+          > tags.json
+
+      - name: Update Leaderboard
+        run: python3 scripts/update_leaderboard.py
