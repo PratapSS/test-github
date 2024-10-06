@@ -3,7 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # Authenticate with Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("scripts/gitbasics.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name("scripts/credentials.json", scope)
 client = gspread.authorize(creds)
 
 # Open the leaderboard sheet
