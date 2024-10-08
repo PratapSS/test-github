@@ -1,0 +1,3 @@
+requests
+gspread
+oauth2client  # If you need this for Google Sheets authorization
